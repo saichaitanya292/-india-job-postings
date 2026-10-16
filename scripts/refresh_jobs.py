@@ -11,8 +11,8 @@ def get_json(url):
  with urllib.request.urlopen(req,timeout=25) as res:return json.loads(res.read().decode('utf-8'))
 def category(title,text=''):
  s=(title+' '+text).lower()
- if re.search(r'\\b(qa|quality|sdet|test automation|software tester|testing)\\b',s):return 'QA & Testing'
- if re.search(r'machine learning|\\bai\\b|artificial intelligence|nlp|computer vision|deep learning|llm',s):return 'AI / Machine Learning'
+ if re.search(r'\b(qa|quality|sdet|test automation|software tester|testing)\b',s):return 'QA & Testing'
+ if re.search(r'machine learning|\bai\b|artificial intelligence|nlp|computer vision|deep learning|llm',s):return 'AI / Machine Learning'
  if re.search(r'data analyst|data scientist|analytics|data engineer|business intelligence',s):return 'Data & Analytics'
  if re.search(r'devops|cloud engineer|site reliability|platform engineer|kubernetes',s):return 'Cloud & DevOps'
  if re.search(r'software|developer|frontend|backend|full.?stack|java engineer|python engineer',s):return 'Software Engineering'
@@ -43,7 +43,7 @@ def main():
  unique={j['url']:j for j in jobs if j.get('url')}
  if unique:
   ordered=sorted(unique.values(),key=lambda j:j.get('posted',''),reverse=True)
-  OUT.write_text(json.dumps(ordered,ensure_ascii=False,indent=2)+'\\n',encoding='utf-8');print('Wrote',len(ordered),'jobs from configured boards.')
+  OUT.write_text(json.dumps(ordered,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');print('Wrote',len(ordered),'jobs from configured boards.')
  else:print('No real jobs collected. Configure GREENHOUSE_BOARDS and/or LEVER_SITES repository variables.')
  for failure in failures:print('WARNING:',failure)
 if __name__=='__main__':main()
